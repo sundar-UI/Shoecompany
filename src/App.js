@@ -30,7 +30,7 @@ function App() {
               <Route path="/list" element={<List />}/>
               <Route path="/update" element={<Update />}/>
               {/* <Route path="/detail/:id" element={<Detail />}/> */}
-              <Route path="/products/:productId" element={<Detail />} />
+              <Route path="/products/:id" element={<Detail />} />
           </Routes>
           <Footer />
       </Router>

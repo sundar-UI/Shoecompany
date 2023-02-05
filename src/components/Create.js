@@ -9,33 +9,52 @@ function Create() {
     const[brandname, setbrandname] = useState('');
     const[descname, setdescname] = useState('');
     const[image, setimage] = useState('');
+    const[successUpload, setsuccessUpload] = useState(false);
     const[id, setid] = useState('');
 
     const navigate = useNavigate();
     
-    const postdata = async (event) => {
+    const postdata =  async (event) => {
         event.preventDefault(event);
-        await axios.post(API, {
-            brandname,
-            descname,
-            image
-        })
-        navigate('/list');
+        console.log(brandname, 'brandname')
+        console.log(descname, 'descname')
+        if(brandname != '' && descname != '' && successUpload  == true ) {
+           await axios.post(API, {
+                brandname,
+                descname,
+                image
+            }).then((response)=> {
+                console.log('succcess', response)
+                navigate('/list')
+                
+            }).catch((error) => {
+                alert('Please check image size, image should not be more then 50Kb')
+            })  
+            
+        }
+        else {
+            
+            alert('Please fill all fields')
+        }
+         
+        
     }
     
     
     const uploadimage = async (e) =>{
         const file = e.target.files[0]
         const base64 = await convertbase(file)
+        console.log(base64, 'base64')
         setimage(base64)
     }
     
     const convertbase = (file) => {
-        return new Promise((resolve, reject) => {
+        return  new Promise((resolve, reject) => {
             const filereader = new FileReader();
             filereader.readAsDataURL(file);
-
+            console.log(filereader, 'filereader')
             filereader.onload = (() =>{
+                setsuccessUpload(true)
                 resolve(filereader.result);
             })
             filereader.onerror = ((error) => {
@@ -61,7 +80,7 @@ function Create() {
                 <div className="field">
                     <label>Image upload :</label>
                     <input type="file"  id="change" onChange = {(e) => {uploadimage(e)}}  />
-                    <p>Please select File size Below 1MB</p>
+                    <p>Please select File size Below 50Kb</p>
                 </div>
                 <button className="btn btn-danger" onClick = {postdata}>submit</button>
             </form>

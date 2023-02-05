@@ -194,7 +194,7 @@ body, p, h1, h2, h3, h4, h5, h6, span, ul, ol, li, dl, dt, dd, form {
             &:nth-child(3n){
                 margin-right: 0;
             }
-            a, .procont{
+            a{
                 border: 1px solid #e5e5e5;
                 border-radius: 10px;
                 display: block;
@@ -214,8 +214,12 @@ body, p, h1, h2, h3, h4, h5, h6, span, ul, ol, li, dl, dt, dd, form {
                     padding: 0 15px;
                     p{
                         &:first-child{
-                            font: 25px/30px 'Merriweather Sans', sans-serif;
-                            min-height: auto; 
+                            font: 25px/30px "Merriweather Sans", sans-serif;
+                            min-height: auto;
+                            text-overflow: ellipsis;
+                            overflow: hidden;
+                            -webkit-line-clamp: 1;
+                            text-transform: capitalize;
                         }
                         font: 18px/25px 'Poppins', sans-serif;
                         display: -webkit-box;
@@ -251,6 +255,13 @@ tr,td,table,th{
             }
             .description{
                 width: 30%;
+                p{
+                    display: -webkit-box;
+                        -webkit-line-clamp: 4;
+                        -webkit-box-orient: vertical;  
+                        overflow: hidden;
+                        min-height: 50px; 
+                }
             }
             .pro_img{
                 width: 20%;
@@ -367,6 +378,30 @@ tr,td,table,th{
         button{
             display: block;
             margin: 40px auto 0;
+        }
+    }
+}
+
+.product_content {
+    .detailsimg{
+        width: 50%;
+        padding-right: 30px;
+        margin-top: 40px;
+    }
+    .content {
+        width: 50%;
+        padding-left: 20px;
+        margin-top: 40px;
+        p{
+            &:first-child {
+                font: 35px/35px 'Merriweather Sans', sans-serif; 
+                margin-bottom: 15px;
+                color:#000;
+                text-transform: capitalize;
+            }
+
+            font: 18px/25px 'Poppins', sans-serif;
+            color:#999;
         }
     }
 }

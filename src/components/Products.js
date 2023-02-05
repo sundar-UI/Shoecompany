@@ -6,12 +6,21 @@ import { Link } from "react-router-dom"
 function Products() {
     
     const [apidata, setapidata] = useState([]);
+    const [apiError, setApiError] = useState('');
 
      
     const getdata = () => {
-        return fetch(API)
-         .then((response) => response.json())
-         .then((data) => setapidata(data));
+        // return fetch(API)
+        //  .then((response) => response.json())
+        //  .then((data) => setapidata(data));
+
+        axios.get(API).then((response)=>{
+            console.log(response)
+            setapidata(response.data)
+        }).catch((response)=>{
+            setApiError(response.message)
+            console.log(response.message)
+        })
     }
 
     useEffect(() => {
@@ -31,8 +40,9 @@ function Products() {
             <div className="product_content">
                     
                     
-                    { apidata.map((data) => (
+                    { apidata.length!= 0 && apidata.map((data) => (
                         <div className="product" key={data.id}>
+                            <Link to={`/products/${data.id}`}>
                             <div className="procont">
                                 <div className="pro_img">
                                     <img src={data.image} alt="shoe"/>
@@ -42,8 +52,13 @@ function Products() {
                                     <p>{data.descname}</p>
                                 </div>
                             </div>
+                            </Link>
                         </div>
                     ))}
+
+                    
+                       <span> {apiError}</span> 
+                    
 
 
 

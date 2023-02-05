@@ -1,18 +1,20 @@
 import React, {useState, useEffect} from 'react'
 import {API} from '../mocklink/Apilink'
 import axios from 'axios'
-import {useNavigate} from 'react-router-dom'
+import {useNavigate, useParams} from 'react-router-dom'
 
 function List() {
     
     const [listdata, setlistdata] = useState([]);
     const navigate = useNavigate();
+    
        
         const update = ({brandname, descname, image, id}) =>{
             localStorage.setItem('ID', id)
             localStorage.setItem('brandname', brandname)
             localStorage.setItem('descname', descname)
             localStorage.setItem('image', image)
+            
             navigate('/update')
         }
 
@@ -23,9 +25,16 @@ function List() {
         }
          
         const getlistdata = async () => {
-            return fetch(API)
-             .then((response) => response.json())
-             .then((data) => setlistdata(data));
+            console.log('get api')
+            await axios.get(API).then((response)=>{
+                console.log(response)
+                setlistdata(response.data)
+            }).catch((response)=>{
+                console.log(response.message)
+            })
+            // return fetch(API)
+            //  .then((response) => response.json())
+            //  .then((data) => setlistdata(data));
         }
     
         useEffect(() => {
